@@ -21,7 +21,7 @@ class UrlManagement:
     def generate_urls_nav(self):
         check_etape_zero = 0
         for i in self.soup.find("div", class_="side_categories").find_all("a"):
-            print(str(check_etape_zero), " /51, etape 0/4")
+            print(str(check_etape_zero), " /50, etape 0/4")
             check_etape_zero += 1
             self.urls_nav.append(i["href"])
         for i in range(len(self.urls_nav)):
@@ -40,12 +40,9 @@ class UrlManagement:
         self.generate_titles_nav()
 
     def update_soup(self):
-        check_etape_un = 0
         self.page = requests.get(self.url)
         self.soup = BeautifulSoup(self.page.content, "html.parser")
         for i in self.soup.find_all("h3"):
-            print(str(check_etape_un), " /1000, etape 1/4")
-            check_etape_un += 1
             self.titles_books.append(i.a["title"])
             self.urls_books.append(i.a["href"].replace("../../../", "http://books.toscrape.com/catalogue/"))
             self.generate_titles_nav_pages()
@@ -60,8 +57,11 @@ class UrlManagement:
             pass
 
     def running_url(self):
+        check_etape_un = 0
         self.generate_nav()
         for url_nav in self.urls_nav:
+            print(str(check_etape_un), " /1000, etape 1/4")
+            check_etape_un += 1
             self.url = url_nav
             self.last_url = "index.html"
             self.url = self.url.replace("index.html", self.last_url)
