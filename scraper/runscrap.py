@@ -38,6 +38,7 @@ class RunScrap:
             self.scrap_book.extract_all(url_book)
 
     def running(self):
+        self.check_main_repertory()
         self.urls_nav_mng.generate_nav()
         for url_nav in self.urls_nav_mng.urls_nav:
             self.check_repertory(self.urls_nav_mng.titles_nav[self.id_titles])
