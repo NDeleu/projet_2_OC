@@ -8,6 +8,8 @@ import shutil
 from .urlmanagement import UrlManagement
 from .scrapbook import ScrapBook
 from .checknextpage import CheckNext
+from .loadscrap import LoadScrap
+from .loadimage import LoadImage
 
 
 class RunScrap:
@@ -16,6 +18,8 @@ class RunScrap:
         self.urls_nav_mng = UrlManagement(self.url)
         self.scrap_url = None
         self.scrap_book = None
+        self.load_scrap = LoadScrap()
+        self.load_image = LoadImage()
         self.id_titles = 0
 
     def check_repertory(self, title_nav):
@@ -35,7 +39,7 @@ class RunScrap:
             self.check_repertory(self.urls_nav_mng.titles_nav[self.id_titles])
             self.running_scrap_csv(url_nav, self.urls_nav_mng.titles_nav[self.id_titles])
 
-            self.load_data_csv(self.urls_nav_mng, self.scrap_book)
-            self.running_scrap_load_img()
+            self.load_scrap.load_data_csv(self.scrap_url, self.scrap_book, self.urls_nav_mng.titles_nav[self.id_titles])
+            self.load_image.running_scrap_load_img(self.scrap_book, self.urls_nav_mng.titles_nav[self.id_titles])
 
             self.id_titles += 1

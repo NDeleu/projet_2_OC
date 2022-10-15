@@ -7,14 +7,13 @@ import shutil
 
 
 class LoadScrap:
-    def __init__(self, url):
-        self.url = url
+    def __init__(self):
         self.en_tete_csv = ["product_page_url", "universal_product_code", "title", "price_including_tax",
                             "price_excluding_tax", "number_available", "product_description", "category",
                             "review_rating", "image_url"]
 
-    def load_data_csv(self, scrap_url, scrap_book):
-        with open("data.csv", "w+", newline='', encoding="utf-8") as fichier_csv:
+    def load_data_csv(self, scrap_url, scrap_book, category_title):
+        with open(category_title + ".csv", "w+", newline='', encoding="utf-8") as fichier_csv:
             writer = csv.writer(fichier_csv, delimiter=',')
             writer.writerow(self.en_tete_csv)
 
@@ -27,4 +26,8 @@ class LoadScrap:
                 ligne = [product_page_url, universal_product_code, title, price_including_tax, price_excluding_tax,
                          number_available, product_description, category, review_rating, image_url]
                 writer.writerow(ligne)
+
+                shutil.copy(category_title + ".csv",
+                            category_title + "_doc/" + category_title + ".csv")
+                os.remove(category_title + ".csv")
 
