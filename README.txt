@@ -18,18 +18,39 @@ composante des éléments extraits :
 2/
 	- image				image format jpg correspondante à l'ouvrage
 
-1/ Toutes les données de cette partie seront enregistrés dans un fichier csv nommé data.csv
-2/ Un dossier nommé doc_img sera créé lors du processus de l'extraction des données pour enregistrer les images
+Un dossier nommé scrap_doc sera créé dans le repository principal.
+Ce dossier sera composé de sous_dossié portant le nom des différentes catégories de livres.
+Chacun de ces sous dossier contiendra un fichier csv avec tous les livres relatifs à cette catégorie et les données relatives à ces livres (voir 1/)
+Chacun de ces sous dossier contiendra aussi les images relatives aux livres repertoriés dans le fichier csv (voir 2/)
 
-Le processus d'extraction peut être suivit en temps réel directement sur la console/terminal d'éxecution.
-Ce processus est défini en 5 points :
-	- extraction de l'URL des différentes catégories
-	- extraction de l'URL des différents ouvrages
-	- extraction des données des ouvrages
-	- enregistrement de toutes les données (1/) dans le fichier data.csv
-	- enregistrement de toutes les images (2/)  dans le document doc_img
 
-Si vous désirez d'avantage d'informations sur les composantes des classes et modules, merci de consulter la documentation (doc) 
+Si vous désirez d'avantage d'informations sur les composantes des classes et modules utilisés dans le script de la pipeline ETL,
+merci de consulter la documentation (doc) proposée dans le repository principal
+
+UTILISATION:
+Voici les étapes à réaliser pour utiliser la pipeline ETL :
+
+- Dans votre terminal, accédez au dossier projet_2_OC :
+    Saisissez dans votre terminal : cd nom_du_chemin_d_acces
+    Si vous recherchez le path de ce chemin, allez dans le dossier projet_2_OC, et dans la barre de recherche du dossier,
+        situé en haut du dossier, faites un clic gauche pour sélectionner le chemin, puis un clic droit pour copier coller ce chemin
+- Dans votre terminal, créez un environnement virtuel pour Python, par convention nous appelerons cet environnement : env
+    * Sous Microsoft Windows : python -m venv env
+    * Sous Linux et Mac : python3 -m venv env
+- Connectez vous à cet environnement virtuel :
+    * Sur un terminal Windows powershell : env/Scripts/Activate.ps1
+    * Sur un terminal Windows invite de commande : env/Scripts/activate.bat
+    * Sur un terminal Linux ou Mac : source env/bin/activate
+- Vérifiez que vous êtes bien connecté à votre environnement virtuel, au début de la ligne du terminal doit apparaître : (env)
+    Si vous désirez vous déconnecter de votre environnement virtuel, saisissez la commande : deactivate
+- Installez dans votre environnement virtuel les modules attendus pour le bon fonctionnement du script de la pipeline ETL :
+    Une fois connecté à votre environnement virtuel saisissez dans votre terminal la commande : pip install -r requirements.txt
+- Vous pouvez maintenant lancer le processus d'extraction des données en saisissant dans votre terminal :
+    * Sur Microsoft Windows : python main.py
+    * Sur Linux ou Mac : python3 main.py
+
+Pour toute problématique de lancement lié à l'installation de Python ou des Path liés à Microsoft, Mac ou Linux,
+Merci de vous référez directement au site officiel de Python : https://www.python.org/downloads/
 
 LICENSE:
 Application open source
