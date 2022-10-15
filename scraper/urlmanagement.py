@@ -19,10 +19,7 @@ class UrlManagement:
         self.urls_books = []
 
     def generate_urls_nav(self):
-        check_etape_un = 0
         for i in self.soup.find("div", class_="side_categories").find_all("a"):
-            print(str(check_etape_un), " /50, etape 1/5")
-            check_etape_un += 1
             self.urls_nav.append(i["href"])
         for i in range(len(self.urls_nav)):
             self.urls_nav[0+i] = self.url + self.urls_nav[0+i]
@@ -57,11 +54,8 @@ class UrlManagement:
             pass
 
     def running_url(self):
-        check_etape_deux = 0
         self.generate_nav()
         for url_nav in self.urls_nav:
-            print(str(check_etape_deux), " /1000, etape 2/5")
-            check_etape_deux += 1
             self.url = url_nav
             self.last_url = "index.html"
             self.url = self.url.replace("index.html", self.last_url)
