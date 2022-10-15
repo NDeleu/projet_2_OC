@@ -16,6 +16,6 @@ class LoadImage:
             with Image.open(requests.get(url, stream=True).raw) as img:
                 img.save(scrap_book.upc_list[id_upc] + ".jpg")
                 shutil.copy(scrap_book.upc_list[id_upc] + ".jpg",
-                            category_title + "_doc/" + scrap_book.upc_list[id_upc] + ".jpg")
+                            "scrap_doc/" + category_title + "_doc/" + scrap_book.upc_list[id_upc] + ".jpg")
                 os.remove(scrap_book.upc_list[id_upc] + ".jpg")
             id_upc += 1

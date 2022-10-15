@@ -22,9 +22,13 @@ class RunScrap:
         self.load_image = LoadImage()
         self.id_titles = 0
 
+    def check_main_repertory(self):
+        if not os.path.exists("scrap_doc"):
+            os.mkdir("scrap_doc")
+
     def check_repertory(self, title_nav):
-        if not os.path.exists(title_nav + "_doc"):
-            os.mkdir(title_nav + "_doc")
+        if not os.path.exists("scrap_doc/" + title_nav + "_doc"):
+            os.mkdir("scrap_doc/" + title_nav + "_doc")
 
     def running_scrap_csv(self, url_nav, title_nav):
         self.scrap_url = CheckNext(url_nav, title_nav)

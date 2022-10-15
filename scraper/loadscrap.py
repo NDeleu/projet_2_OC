@@ -13,7 +13,7 @@ class LoadScrap:
                             "review_rating", "image_url"]
 
     def load_data_csv(self, scrap_url, scrap_book, category_title):
-        with open(category_title + "_doc/" + category_title + ".csv",
+        with open("scrap_doc/" + category_title + "_doc/" + category_title + ".csv",
                   "w+", newline='', encoding="utf-8") as fichier_csv:
             writer = csv.writer(fichier_csv, delimiter=',')
             writer.writerow(self.en_tete_csv)
