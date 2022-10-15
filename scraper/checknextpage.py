@@ -5,8 +5,14 @@ import csv
 import os
 import shutil
 
+
 class CheckNext:
     def __init__(self):
+        self.id_titles = 0
+        self.last_url = "index.html"
+        self.titles_nav_pages = []
+        self.titles_books = []
+        self.urls_books = []
 
     def update_soup(self):
         self.page = requests.get(self.url)

@@ -5,6 +5,7 @@ import csv
 import os
 import shutil
 
+
 class UrlManagement:
     def __init__(self, url):
         self.url = url
@@ -12,11 +13,6 @@ class UrlManagement:
         self.soup = BeautifulSoup(self.page.content, "html.parser")
         self.urls_nav = []
         self.titles_nav = []
-        self.last_url = "index.html"
-        self.id_titles = 0
-        self.titles_nav_pages = []
-        self.titles_books = []
-        self.urls_books = []
 
     def generate_urls_nav(self):
         for i in self.soup.find("div", class_="side_categories").find_all("a"):
