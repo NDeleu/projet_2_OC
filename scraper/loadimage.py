@@ -7,3 +7,13 @@ import shutil
 
 class LoadImage:
     def __init__(self):
+
+
+    def running_scrap_load_img(self):
+        for url in self.scrap_book.img_url_list:
+            with Image.open(requests.get(url, stream=True).raw) as img:
+                img.save(self.scrap_book.upc_list[self.id_upc] + ".jpg")
+                shutil.copy(self.scrap_book.upc_list[self.id_upc] + ".jpg",
+                            "doc_img/" + self.scrap_book.upc_list[self.id_upc] + ".jpg")
+                os.remove(self.scrap_book.upc_list[self.id_upc] + ".jpg")
+            self.id_upc += 1

@@ -36,19 +36,3 @@ class LoadScrap:
         self.scrap_url.running_url()
         for url_book in self.scrap_url.urls_books:
             self.scrap_book.extract_all(url_book)
-
-    def running_scrap_load_img(self):
-        if not os.path.exists("doc_img"):
-            os.mkdir("doc_img")
-
-        for url in self.scrap_book.img_url_list:
-            with Image.open(requests.get(url, stream=True).raw) as img:
-                img.save(self.scrap_book.upc_list[self.id_upc]+".jpg")
-                shutil.copy(self.scrap_book.upc_list[self.id_upc]+".jpg", "doc_img/"+self.scrap_book.upc_list[self.id_upc]+".jpg")
-                os.remove(self.scrap_book.upc_list[self.id_upc]+".jpg")
-            self.id_upc += 1
-
-    def running(self):
-        self.running_scrap_csv()
-        self.load_data_csv()
-        self.running_scrap_load_img()

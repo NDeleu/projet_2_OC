@@ -1,1 +1,1 @@
-from .loadscrap import LoadScrap
+from .runscrap import RunScrap

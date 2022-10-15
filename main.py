@@ -1,5 +1,5 @@
-from scraper import LoadScrap
+from scraper import RunScrap
 
-scrap = LoadScrap("http://books.toscrape.com/")
+scrap = RunScrap("http://books.toscrape.com/")
 scrap.running()
 print("Scrape completed")
