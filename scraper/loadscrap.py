@@ -12,7 +12,6 @@ class LoadScrap:
         self.en_tete_csv = ["product_page_url", "universal_product_code", "title", "price_including_tax",
                             "price_excluding_tax", "number_available", "product_description", "category",
                             "review_rating", "image_url"]
-        self.id_upc = 0
 
     def load_data_csv(self, scrap_url, scrap_book):
         with open("data.csv", "w+", newline='', encoding="utf-8") as fichier_csv:

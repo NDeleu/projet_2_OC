@@ -7,8 +7,11 @@ import shutil
 
 
 class CheckNext:
-    def __init__(self):
-        self.id_titles = 0
+    def __init__(self, url_nav, title_nav):
+        self.url = url_nav
+        self.title_nav = title_nav
+        self.page = requests.get(self.url)
+        self.soup = BeautifulSoup(self.page.content, "html.parser")
         self.last_url = "index.html"
         self.titles_nav_pages = []
         self.titles_books = []
@@ -23,7 +26,7 @@ class CheckNext:
             self.generate_titles_nav_pages()
 
     def generate_titles_nav_pages(self):
-        self.titles_nav_pages.append(self.titles_nav[self.id_titles])
+        self.titles_nav_pages.append(self.title_nav)
 
     def test_next(self):
         if self.soup.find(class_="next"):
@@ -32,12 +35,10 @@ class CheckNext:
             pass
 
     def running_url(self):
-        self.url = url_nav
         self.last_url = "index.html"
         self.url = self.url.replace("index.html", self.last_url)
         self.update_soup()
         self.test_next()
-        self.id_titles += 1
 
     def next_page(self):
         add_url = self.soup.find(class_="next").a["href"]

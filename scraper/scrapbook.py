@@ -5,6 +5,7 @@ import csv
 import os
 import shutil
 
+
 class ScrapBook:
     """
     Extracts elements from the page
