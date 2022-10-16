@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>src.scraper.runscrap &#8212; Projet 2 OC 1.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/haiku.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+      <div class="header" role="banner"><h1 class="heading"><a href="../../../index.html">
+          <span>Projet 2 OC 1.0.0 documentation</span></a></h1>
+        <h2 class="heading"><span>src.scraper.runscrap</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content" role="main">
+        
+        
+  <h1>Source code for src.scraper.runscrap</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+
+<span class="kn">from</span> <span class="nn">.urlmanagement</span> <span class="kn">import</span> <span class="n">UrlManagement</span>
+<span class="kn">from</span> <span class="nn">.scrapbook</span> <span class="kn">import</span> <span class="n">ScrapBook</span>
+<span class="kn">from</span> <span class="nn">.checknextpage</span> <span class="kn">import</span> <span class="n">CheckNext</span>
+<span class="kn">from</span> <span class="nn">.loadscrap</span> <span class="kn">import</span> <span class="n">LoadScrap</span>
+<span class="kn">from</span> <span class="nn">.loadimage</span> <span class="kn">import</span> <span class="n">LoadImage</span>
+
+
+<div class="viewcode-block" id="RunScrap"><a class="viewcode-back" href="../../../scraper.html#src.scraper.runscrap.RunScrap">[docs]</a><span class="k">class</span> <span class="nc">RunScrap</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Centralise les classes et les méthodes de l&#39;application de la pipeline ETL.</span>
+<span class="sd">        Permet d&#39;executer l&#39;ensemble des méthodes de l&#39;application à partir de cette classe.</span>
+<span class="sd">        Création des dossiers répertoriant les données et images extraits.</span>
+<span class="sd">        Récupère l&#39;url correspondant au site Book to Scrape</span>
+<span class="sd">        :param url: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">urls_nav_mng</span> <span class="o">=</span> <span class="n">UrlManagement</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrap_url</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrap_book</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_scrap</span> <span class="o">=</span> <span class="n">LoadScrap</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_image</span> <span class="o">=</span> <span class="n">LoadImage</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_titles</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="RunScrap.check_main_repertory"><a class="viewcode-back" href="../../../scraper.html#src.scraper.runscrap.RunScrap.check_main_repertory">[docs]</a>    <span class="k">def</span> <span class="nf">check_main_repertory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Vérification de l&#39;existance d&#39;un dossier repertoriant l&#39;ensemble des données et images extrait, et création</span>
+<span class="sd">        de ce dossier si inexistant a priori</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;scrap_doc&quot;</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s2">&quot;scrap_doc&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RunScrap.check_repertory"><a class="viewcode-back" href="../../../scraper.html#src.scraper.runscrap.RunScrap.check_repertory">[docs]</a>    <span class="k">def</span> <span class="nf">check_repertory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title_nav</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Vérification de l&#39;existance d&#39;un dossier repertoriant les données et images relatives à la catégorie</span>
+<span class="sd">        renseignée par title_nav, et création de ce dossier si inexistant a priori</span>
+<span class="sd">        :param title_nav: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;scrap_doc/&quot;</span> <span class="o">+</span> <span class="n">title_nav</span> <span class="o">+</span> <span class="s2">&quot;_doc&quot;</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s2">&quot;scrap_doc/&quot;</span> <span class="o">+</span> <span class="n">title_nav</span> <span class="o">+</span> <span class="s2">&quot;_doc&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RunScrap.running_scrap_csv"><a class="viewcode-back" href="../../../scraper.html#src.scraper.runscrap.RunScrap.running_scrap_csv">[docs]</a>    <span class="k">def</span> <span class="nf">running_scrap_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url_nav</span><span class="p">,</span> <span class="n">title_nav</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Méthode créant les instances de ScrapBook et de CheckNext pour les réactualiser à chaque catégories</span>
+<span class="sd">        renseignées par l&#39;instance d&#39;UrlManagement et qui seront utilisés dans la méthode running().</span>
+<span class="sd">        Cette méthode appelera la méthode running_url() de l&#39;instance de la classe CheckNext pour renseigner</span>
+<span class="sd">        l&#39;url de la méthode extract_all de l&#39;instance de la classe ScrapBook afin d&#39;extraire les données désirées</span>
+<span class="sd">        sur chaque url correspondant aux ouvrages.</span>
+<span class="sd">        :param url_nav: str</span>
+<span class="sd">        :param title_nav: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrap_url</span> <span class="o">=</span> <span class="n">CheckNext</span><span class="p">(</span><span class="n">url_nav</span><span class="p">,</span> <span class="n">title_nav</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrap_url</span><span class="o">.</span><span class="n">running_url</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrap_book</span> <span class="o">=</span> <span class="n">ScrapBook</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">url_book</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scrap_url</span><span class="o">.</span><span class="n">urls_books</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scrap_book</span><span class="o">.</span><span class="n">extract_all</span><span class="p">(</span><span class="n">url_book</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RunScrap.running"><a class="viewcode-back" href="../../../scraper.html#src.scraper.runscrap.RunScrap.running">[docs]</a>    <span class="k">def</span> <span class="nf">running</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Méthode principale de l&#39;application faisant appelle aux autres méthodes.</span>
+<span class="sd">        Dans l&#39;ordre la méthode appelera :</span>
+<span class="sd">        - la vérification et, sous condition, la création du dossier repertoriant l&#39;ensemble des données extraites,</span>
+<span class="sd">        - génèrera les listes des url et titres des catégories,</span>
+<span class="sd">        - pour chaque catégorie, la méthode pour vérifier et, sous condition créer le sous dossier de la catégorie,</span>
+<span class="sd">        - l&#39;extraction des données pour chaque catégorie</span>
+<span class="sd">        - l&#39;écriture de ces données dans un fichier csv repertorié dans le sous dossier de la catégorie relative</span>
+<span class="sd">        - l&#39;extraction et l&#39;enregistrement des images correspondantes aux ouvrages dans le sous dossier de la</span>
+<span class="sd">        catégorie relative.</span>
+<span class="sd">        Enfin la méthode fait appel à une accrémentation d&#39;un id : self.id_titles pour itérer l&#39;indice des listes</span>
+<span class="sd">        dans l&#39;ordre.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_main_repertory</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">urls_nav_mng</span><span class="o">.</span><span class="n">generate_nav</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">url_nav</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">urls_nav_mng</span><span class="o">.</span><span class="n">urls_nav</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">check_repertory</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">urls_nav_mng</span><span class="o">.</span><span class="n">titles_nav</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id_titles</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">running_scrap_csv</span><span class="p">(</span><span class="n">url_nav</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">urls_nav_mng</span><span class="o">.</span><span class="n">titles_nav</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id_titles</span><span class="p">])</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_scrap</span><span class="o">.</span><span class="n">load_data_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scrap_url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scrap_book</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">urls_nav_mng</span><span class="o">.</span><span class="n">titles_nav</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id_titles</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_image</span><span class="o">.</span><span class="n">running_scrap_load_img</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scrap_book</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">urls_nav_mng</span><span class="o">.</span><span class="n">titles_nav</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id_titles</span><span class="p">])</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">id_titles</span> <span class="o">+=</span> <span class="mi">1</span></div></div>
+</pre></div>
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, Deleu Nicolas.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.2.3.
+    </div>
+  </body>
+</html>

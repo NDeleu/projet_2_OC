@@ -1,4 +1,4 @@
-from scraper import RunScrap
+from src.scraper import RunScrap
 
 scrap = RunScrap("http://books.toscrape.com/")
 scrap.running()

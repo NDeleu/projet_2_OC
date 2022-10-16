@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>src.scraper.loadimage &#8212; Projet 2 OC 1.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/haiku.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+      <div class="header" role="banner"><h1 class="heading"><a href="../../../index.html">
+          <span>Projet 2 OC 1.0.0 documentation</span></a></h1>
+        <h2 class="heading"><span>src.scraper.loadimage</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content" role="main">
+        
+        
+  <h1>Source code for src.scraper.loadimage</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+
+
+<div class="viewcode-block" id="LoadImage"><a class="viewcode-back" href="../../../scraper.html#src.scraper.loadimage.LoadImage">[docs]</a><span class="k">class</span> <span class="nc">LoadImage</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Recherche les images à partir de la liste des url d&#39;image proposée par ScrapBook et extrait ces images</span>
+<span class="sd">        en les nommant par l&#39;upc de l&#39;ouvrage correspondant</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="LoadImage.running_scrap_load_img"><a class="viewcode-back" href="../../../scraper.html#src.scraper.loadimage.LoadImage.running_scrap_load_img">[docs]</a>    <span class="k">def</span> <span class="nf">running_scrap_load_img</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scrap_book</span><span class="p">,</span> <span class="n">category_title</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A partir de l&#39;instance de ScrapBook pour accéder à la liste des url des images</span>
+<span class="sd">        et à la liste des upc correspondant, ainsi qu&#39;à partir de l&#39;instance de CheckNext</span>
+<span class="sd">        pour extraire le titre des catégories, les images relatives aux ouvrages seront extraites et enregistrées</span>
+<span class="sd">        en format jpg avec le nom de l&#39;upc de l&#39;ouvrage relatif dans le dossier au nom de catégorie correspodant.</span>
+<span class="sd">        :param scrap_book: str</span>
+<span class="sd">        :param category_title: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">id_upc</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">scrap_book</span><span class="o">.</span><span class="n">img_url_list</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">raw</span><span class="p">)</span> <span class="k">as</span> <span class="n">img</span><span class="p">:</span>
+                <span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">scrap_book</span><span class="o">.</span><span class="n">upc_list</span><span class="p">[</span><span class="n">id_upc</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.jpg&quot;</span><span class="p">)</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">scrap_book</span><span class="o">.</span><span class="n">upc_list</span><span class="p">[</span><span class="n">id_upc</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.jpg&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;scrap_doc/&quot;</span> <span class="o">+</span> <span class="n">category_title</span> <span class="o">+</span> <span class="s2">&quot;_doc/&quot;</span> <span class="o">+</span> <span class="n">scrap_book</span><span class="o">.</span><span class="n">upc_list</span><span class="p">[</span><span class="n">id_upc</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.jpg&quot;</span><span class="p">)</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">scrap_book</span><span class="o">.</span><span class="n">upc_list</span><span class="p">[</span><span class="n">id_upc</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.jpg&quot;</span><span class="p">)</span>
+            <span class="n">id_upc</span> <span class="o">+=</span> <span class="mi">1</span></div></div>
+</pre></div>
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, Deleu Nicolas.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.2.3.
+    </div>
+  </body>
+</html>

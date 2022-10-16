@@ -1,0 +1,298 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>scraper package &#8212; Projet 2 OC 1.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/haiku.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+      <div class="header" role="banner"><h1 class="heading"><a href="index.html">
+          <span>Projet 2 OC 1.0.0 documentation</span></a></h1>
+        <h2 class="heading"><span>scraper package</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        <a class="uplink" href="index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content" role="main">
+        
+        
+  <section id="scraper-package">
+<h1>scraper package<a class="headerlink" href="#scraper-package" title="Permalink to this heading">¶</a></h1>
+<section id="module-src.scraper">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.scraper" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="module-src.scraper.checknextpage">
+<span id="scraper-checknextpage-module"></span><h2>scraper.checknextpage module<a class="headerlink" href="#module-src.scraper.checknextpage" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.scraper.checknextpage.CheckNext">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.scraper.checknextpage.</span></span><span class="sig-name descname"><span class="pre">CheckNext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url_nav</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title_nav</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/scraper/checknextpage.html#CheckNext"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.checknextpage.CheckNext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.scraper.checknextpage.CheckNext.next_page">
+<span class="sig-name descname"><span class="pre">next_page</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/scraper/checknextpage.html#CheckNext.next_page"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.checknextpage.CheckNext.next_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appelée par la méthode test_next() si l’attribut next, de la page html consultée, existe,
+cette méthode permet de modifier le complément de l’url pour appeler la page suivante de la même catégorie</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.scraper.checknextpage.CheckNext.running_url">
+<span class="sig-name descname"><span class="pre">running_url</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/scraper/checknextpage.html#CheckNext.running_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.checknextpage.CheckNext.running_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Méthode préparant les compléments d’adresses url pour la méthode next-page() et
+permettant aussi en une méthode d’appeler plusieurs autres méthodes, ici :
+self.update_soup()
+self.test_next()</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.scraper.checknextpage.CheckNext.test_next">
+<span class="sig-name descname"><span class="pre">test_next</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/scraper/checknextpage.html#CheckNext.test_next"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.checknextpage.CheckNext.test_next" title="Permalink to this definition">¶</a></dt>
+<dd><p>Méthode vérifiant si l’attribut next existe sur la page html consulté, si ce n’est pas le cas cela permet
+de mettre fin à la boucle de la catégorie consulté, alors que si c’est le cas la boucle de cette catégorie
+continuera avec la page suivante appartenant à la même catégorie de livres appelant la méthode next_page()</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.scraper.checknextpage.CheckNext.update_soup">
+<span class="sig-name descname"><span class="pre">update_soup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/scraper/checknextpage.html#CheckNext.update_soup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.checknextpage.CheckNext.update_soup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Actualise la page consultée par beautifullsoup en actualisant l’url consulté.
+Ajoutes aux listes de la classe : le titre (nom) des ouvrage, l’url de leur page et le titre (nom)
+des catégories de livre par itération.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.scraper.loadimage">
+<span id="scraper-loadimage-module"></span><h2>scraper.loadimage module<a class="headerlink" href="#module-src.scraper.loadimage" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.scraper.loadimage.LoadImage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.scraper.loadimage.</span></span><span class="sig-name descname"><span class="pre">LoadImage</span></span><a class="reference internal" href="_modules/src/scraper/loadimage.html#LoadImage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.loadimage.LoadImage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.scraper.loadimage.LoadImage.running_scrap_load_img">
+<span class="sig-name descname"><span class="pre">running_scrap_load_img</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scrap_book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category_title</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/scraper/loadimage.html#LoadImage.running_scrap_load_img"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.loadimage.LoadImage.running_scrap_load_img" title="Permalink to this definition">¶</a></dt>
+<dd><p>A partir de l’instance de ScrapBook pour accéder à la liste des url des images
+et à la liste des upc correspondant, ainsi qu’à partir de l’instance de CheckNext
+pour extraire le titre des catégories, les images relatives aux ouvrages seront extraites et enregistrées
+en format jpg avec le nom de l’upc de l’ouvrage relatif dans le dossier au nom de catégorie correspodant.
+:param scrap_book: str
+:param category_title: str</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.scraper.loadscrap">
+<span id="scraper-loadscrap-module"></span><h2>scraper.loadscrap module<a class="headerlink" href="#module-src.scraper.loadscrap" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.scraper.loadscrap.LoadScrap">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.scraper.loadscrap.</span></span><span class="sig-name descname"><span class="pre">LoadScrap</span></span><a class="reference internal" href="_modules/src/scraper/loadscrap.html#LoadScrap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.loadscrap.LoadScrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.scraper.loadscrap.LoadScrap.load_data_csv">
+<span class="sig-name descname"><span class="pre">load_data_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scrap_url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scrap_book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category_title</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/scraper/loadscrap.html#LoadScrap.load_data_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.loadscrap.LoadScrap.load_data_csv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Récupère les données extraites et repertoriées dans les listes des classes CheckNext et ScrapBook et écrit
+ces données dans un fichier csv qui prendra le nom de la catégorie des ouvrages correspondante
+:param scrap_url: str
+:param scrap_book: str
+:param category_title: str</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.scraper.runscrap">
+<span id="scraper-runscrap-module"></span><h2>scraper.runscrap module<a class="headerlink" href="#module-src.scraper.runscrap" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.scraper.runscrap.RunScrap">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.scraper.runscrap.</span></span><span class="sig-name descname"><span class="pre">RunScrap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/scraper/runscrap.html#RunScrap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.runscrap.RunScrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.scraper.runscrap.RunScrap.check_main_repertory">
+<span class="sig-name descname"><span class="pre">check_main_repertory</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/scraper/runscrap.html#RunScrap.check_main_repertory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.runscrap.RunScrap.check_main_repertory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Vérification de l’existance d’un dossier repertoriant l’ensemble des données et images extrait, et création
+de ce dossier si inexistant a priori</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.scraper.runscrap.RunScrap.check_repertory">
+<span class="sig-name descname"><span class="pre">check_repertory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title_nav</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/scraper/runscrap.html#RunScrap.check_repertory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.runscrap.RunScrap.check_repertory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Vérification de l’existance d’un dossier repertoriant les données et images relatives à la catégorie
+renseignée par title_nav, et création de ce dossier si inexistant a priori
+:param title_nav: str</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.scraper.runscrap.RunScrap.running">
+<span class="sig-name descname"><span class="pre">running</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/scraper/runscrap.html#RunScrap.running"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.runscrap.RunScrap.running" title="Permalink to this definition">¶</a></dt>
+<dd><p>Méthode principale de l’application faisant appelle aux autres méthodes.
+Dans l’ordre la méthode appelera :
+- la vérification et, sous condition, la création du dossier repertoriant l’ensemble des données extraites,
+- génèrera les listes des url et titres des catégories,
+- pour chaque catégorie, la méthode pour vérifier et, sous condition créer le sous dossier de la catégorie,
+- l’extraction des données pour chaque catégorie
+- l’écriture de ces données dans un fichier csv repertorié dans le sous dossier de la catégorie relative
+- l’extraction et l’enregistrement des images correspondantes aux ouvrages dans le sous dossier de la
+catégorie relative.
+Enfin la méthode fait appel à une accrémentation d’un id : self.id_titles pour itérer l’indice des listes
+dans l’ordre.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.scraper.runscrap.RunScrap.running_scrap_csv">
+<span class="sig-name descname"><span class="pre">running_scrap_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url_nav</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title_nav</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/scraper/runscrap.html#RunScrap.running_scrap_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.runscrap.RunScrap.running_scrap_csv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Méthode créant les instances de ScrapBook et de CheckNext pour les réactualiser à chaque catégories
+renseignées par l’instance d’UrlManagement et qui seront utilisés dans la méthode running().
+Cette méthode appelera la méthode running_url() de l’instance de la classe CheckNext pour renseigner
+l’url de la méthode extract_all de l’instance de la classe ScrapBook afin d’extraire les données désirées
+sur chaque url correspondant aux ouvrages.
+:param url_nav: str
+:param title_nav: str</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.scraper.scrapbook">
+<span id="scraper-scrapbook-module"></span><h2>scraper.scrapbook module<a class="headerlink" href="#module-src.scraper.scrapbook" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.scraper.scrapbook.ScrapBook">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.scraper.scrapbook.</span></span><span class="sig-name descname"><span class="pre">ScrapBook</span></span><a class="reference internal" href="_modules/src/scraper/scrapbook.html#ScrapBook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.scrapbook.ScrapBook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.scraper.scrapbook.ScrapBook.extract_all">
+<span class="sig-name descname"><span class="pre">extract_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/scraper/scrapbook.html#ScrapBook.extract_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.scrapbook.ScrapBook.extract_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Actualise la page consultée par beautifullsoup et l’url qui est consulté.
+Méthode permettant en une méthode d’appeler plusieurs autres méthodes, ici :
+self.extract_upc(soup)
+self.extract_price_excl(soup)
+self.extract_price_incl(soup)
+self.extract_available(soup)
+self.extract_rating(soup)
+self.extract_describe(soup)
+self.extract_img_url(soup)
+:param url: str</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.scraper.scrapbook.ScrapBook.extract_available">
+<span class="sig-name descname"><span class="pre">extract_available</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soup</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/scraper/scrapbook.html#ScrapBook.extract_available"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.scrapbook.ScrapBook.extract_available" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extraction de la disponibilité de l’ouvrage et repertorie cette donnée dans la liste correspondante.
+:param soup: str</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.scraper.scrapbook.ScrapBook.extract_describe">
+<span class="sig-name descname"><span class="pre">extract_describe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soup</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/scraper/scrapbook.html#ScrapBook.extract_describe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.scrapbook.ScrapBook.extract_describe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extraction de la description de l’ouvrage et repertorie cette donnée dans la liste correspondante.
+:param soup: str</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.scraper.scrapbook.ScrapBook.extract_img_url">
+<span class="sig-name descname"><span class="pre">extract_img_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soup</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/scraper/scrapbook.html#ScrapBook.extract_img_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.scrapbook.ScrapBook.extract_img_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extraction de l’url de l’image correspondant à l’ouvrage et repertorie cette donnée
+dans la liste correspondante.
+:param soup: str</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.scraper.scrapbook.ScrapBook.extract_price_excl">
+<span class="sig-name descname"><span class="pre">extract_price_excl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soup</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/scraper/scrapbook.html#ScrapBook.extract_price_excl"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.scrapbook.ScrapBook.extract_price_excl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extraction de du prix hors taxe de l’ouvrage et repertorie cette donnée dans la liste correspondante.
+:param soup: str</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.scraper.scrapbook.ScrapBook.extract_price_incl">
+<span class="sig-name descname"><span class="pre">extract_price_incl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soup</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/scraper/scrapbook.html#ScrapBook.extract_price_incl"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.scrapbook.ScrapBook.extract_price_incl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extraction du prix taxe comprise de l’ouvrage et repertorie cette donnée dans la liste correspondante.
+:param soup: str</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.scraper.scrapbook.ScrapBook.extract_rating">
+<span class="sig-name descname"><span class="pre">extract_rating</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soup</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/scraper/scrapbook.html#ScrapBook.extract_rating"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.scrapbook.ScrapBook.extract_rating" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extraction de la notation des consommateurs de l’ouvrage et repertorie cette donnée
+dans la liste correspondante.
+:param soup: str</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.scraper.scrapbook.ScrapBook.extract_upc">
+<span class="sig-name descname"><span class="pre">extract_upc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soup</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/scraper/scrapbook.html#ScrapBook.extract_upc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.scrapbook.ScrapBook.extract_upc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extraction de l’upc de l’ouvrage et repertorie cette donnée dans la liste correspondante.
+:param soup: str</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.scraper.urlmanagement">
+<span id="scraper-urlmanagement-module"></span><h2>scraper.urlmanagement module<a class="headerlink" href="#module-src.scraper.urlmanagement" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.scraper.urlmanagement.UrlManagement">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.scraper.urlmanagement.</span></span><span class="sig-name descname"><span class="pre">UrlManagement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/scraper/urlmanagement.html#UrlManagement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.urlmanagement.UrlManagement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.scraper.urlmanagement.UrlManagement.generate_nav">
+<span class="sig-name descname"><span class="pre">generate_nav</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/scraper/urlmanagement.html#UrlManagement.generate_nav"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.urlmanagement.UrlManagement.generate_nav" title="Permalink to this definition">¶</a></dt>
+<dd><p>Méthode permettant en une méthode d’appeler plusieurs autres méthodes, ici :
+self.generate_urls_nav()
+self.generate_titles_nav()</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.scraper.urlmanagement.UrlManagement.generate_titles_nav">
+<span class="sig-name descname"><span class="pre">generate_titles_nav</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/scraper/urlmanagement.html#UrlManagement.generate_titles_nav"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.urlmanagement.UrlManagement.generate_titles_nav" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ajoute dans la liste self.titles_nav de la classe les titres (noms) concernés et supprime le premier titre :
+Book, n’étant pas une catégorie distincte mais l’index général</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.scraper.urlmanagement.UrlManagement.generate_urls_nav">
+<span class="sig-name descname"><span class="pre">generate_urls_nav</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/scraper/urlmanagement.html#UrlManagement.generate_urls_nav"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.scraper.urlmanagement.UrlManagement.generate_urls_nav" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ajoute dans la liste self.urls_nav de la classe les url concernés et supprime le premier url :
+Book, n’étant pas une catégorie distincte mais l’index général</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        <a class="uplink" href="index.html">Contents</a>
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, Deleu Nicolas.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.2.3.
+    </div>
+  </body>
+</html>
