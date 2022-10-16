@@ -25,7 +25,7 @@ Chacun de ces sous dossier contiendra aussi les images relatives aux livres repe
 
 
 Si vous désirez d'avantage d'informations sur les composantes des classes et modules utilisés dans le script de la pipeline ETL,
-merci de consulter la documentation (doc) proposée dans le repository principal
+merci de consulter la documentation (docs > _build > html > index.html) proposée dans le repository principal
 
 UTILISATION:
 Voici les étapes à réaliser pour utiliser la pipeline ETL :
