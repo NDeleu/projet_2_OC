@@ -68,15 +68,16 @@ class ScrapBook:
         Extraction de la disponibilité de l'ouvrage et repertorie cette donnée dans la liste correspondante.
         :param soup: str
         """
-        number_available = soup.find("table", class_="table table-striped").find("th", text="Availability").findNext("td").text
-        if "In stock" in number_available :
-            for number in number_available.split():
-                if number.isdigit():
-                    self.available_list.append(int(number))
-                else:
-                    self.available_list.append(0)
-        else:
-            self.available_list.append(0)
+        sentence_available = str(soup.find("table", class_="table table-striped").find("th", text="Availability").findNext("td").text)
+        if "(" in sentence_available:
+            sentence_available = sentence_available.replace("(", "")
+        if ")" in sentence_available:
+            sentence_available = sentence_available.replace(")", "")
+        for number in sentence_available.split():
+            if number.isdigit():
+                self.available_list.append(int(number))
+            else:
+                pass
 
     def extract_rating(self, soup):
         """
