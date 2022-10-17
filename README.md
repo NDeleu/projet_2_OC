@@ -57,8 +57,3 @@ Application open source
 
 REQUIREMENTS:
 Python 3.X, modules (merci de consulter le fichier: requirements.txt)
-
-```Python
-print("hello")
-# commentaire
-```
