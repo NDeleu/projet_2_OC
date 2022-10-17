@@ -68,7 +68,15 @@ class ScrapBook:
         Extraction de la disponibilité de l'ouvrage et repertorie cette donnée dans la liste correspondante.
         :param soup: str
         """
-        self.available_list.append(soup.find("table", class_="table table-striped").find("th", text="Availability").findNext("td").text)
+        number_available = soup.find("table", class_="table table-striped").find("th", text="Availability").findNext("td").text
+        if "In stock" in number_available :
+            for number in number_available.split():
+                if number.isdigit():
+                    self.available_list.append(int(number))
+                else:
+                    self.available_list.append(0)
+        else:
+            self.available_list.append(0)
 
     def extract_rating(self, soup):
         """
@@ -76,7 +84,18 @@ class ScrapBook:
         dans la liste correspondante.
         :param soup: str
         """
-        self.rating_list.append(soup.find("p", class_="star-rating")["class"][1])
+        if "Five" in soup.find("p", class_="star-rating")["class"][1]:
+            self.rating_list.append(5)
+        elif "Four" in soup.find("p", class_="star-rating")["class"][1]:
+            self.rating_list.append(4)
+        elif "Three" in soup.find("p", class_="star-rating")["class"][1]:
+            self.rating_list.append(3)
+        elif "Two" in soup.find("p", class_="star-rating")["class"][1]:
+            self.rating_list.append(2)
+        elif "One" in soup.find("p", class_="star-rating")["class"][1]:
+            self.rating_list.append(1)
+        else:
+            self.rating_list.append(0)
 
     def extract_describe(self, soup):
         """
