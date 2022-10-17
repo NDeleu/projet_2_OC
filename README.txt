@@ -31,7 +31,7 @@ UTILISATION:
 Voici les étapes à réaliser pour utiliser la pipeline ETL :
 
 - Dans votre terminal, accédez au dossier projet_2_OC :
-    Saisissez dans votre terminal : `cd nom_du_chemin_d_acces`
+    Saisissez dans votre terminal : `cd nom_du_chemin_d_acces` 
     Si vous recherchez le path de ce chemin, allez dans le dossier projet_2_OC, et dans la barre de recherche du dossier,
         situé en haut du dossier, faites un clic gauche pour sélectionner le chemin, puis un clic droit pour copier coller ce chemin
 - Dans votre terminal, créez un environnement virtuel pour Python, par convention nous appelerons cet environnement : env
